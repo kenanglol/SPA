@@ -79,22 +79,6 @@ class Advert(models.Model):
         db_table = "ADVERT"
 
 
-class Advertisements(models.Model):
-    pro_id = models.ForeignKey(Provider,
-                               max_length=20,
-                               db_column='PROID',
-                               null=False,
-                               on_delete=models.CASCADE)
-    adv_id = models.ForeignKey(Advert,
-                               max_length=20,
-                               db_column='ADVID',
-                               null=False,
-                               on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = "ADVERTISEMENTS"
-
-
 class ServiceOffer(models.Model):
     service_offer_id = models.CharField(primary_key=True,
                                         max_length=20,
