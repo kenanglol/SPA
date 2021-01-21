@@ -91,7 +91,7 @@ class ServiceOffer(models.Model):
                                  db_column='ADVERID',
                                  null=False,
                                  on_delete=models.CASCADE)
-    customer_conditions = models.CharField(max_length=100,
+    customer_conditions = models.CharField(max_length=1000,
                                            db_column='CUSTOMERCOND',
                                            null=False)
     satisfaction_id = models.CharField(max_length=20,
@@ -132,7 +132,7 @@ class OfferSessions(models.Model):
                                  null=False,
                                  on_delete=models.CASCADE)
     session_id = models.ForeignKey(Schedule,
-                                   db_column='OFFERID',
+                                   db_column='SESSID',
                                    null=False,
                                    on_delete=models.CASCADE)
 
@@ -150,18 +150,20 @@ class ServiceSatisfaction(models.Model):
                                null=False,
                                on_delete=models.CASCADE)
     customer_performance = models.IntegerField(db_column='CUSTOMERSCORE',
-                                               null=False)
+                                               null=True)
     provider_performance = models.IntegerField(db_column='PROVIDERSCORE',
-                                               null=False)
+                                               null=True)
 
     class Meta:
         db_table = "SERVICESATISFACTION"
 
 
 class SatisfactionFails(models.Model):
-    satisfaction_id = models.CharField(primary_key=True,
-                                       max_length=20,
-                                       db_column='SATISFACID')
+    satisfaction_id = models.ForeignKey(ServiceSatisfaction,
+                                        primary_key=True,
+                                        max_length=20,
+                                        db_column='SATISFACID',
+                                        on_delete=models.CASCADE)
 
     failure = models.CharField(max_length=20, db_column='FAILURE', null=False)
 
@@ -170,14 +172,14 @@ class Message(models.Model):
     message_id = models.CharField(primary_key=True,
                                   max_length=20,
                                   db_column='MESID')
-    context = models.CharField(max_length=1000,
+    context = models.CharField(max_length=100,
                                db_column='CONTEXT',
                                null=False)
-    sendtime = models.DateTimeField(db_column='SENDTIME', default=timezone.now)
     sender = models.ForeignKey(User,
                                db_column='SENDERID',
                                null=False,
                                on_delete=models.CASCADE)
+    sendtime = models.DateTimeField(db_column='SENDTIME', default=timezone.now)
 
     class Meta:
         db_table = "MESSAGE"
