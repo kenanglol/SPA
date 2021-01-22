@@ -20,11 +20,18 @@ class Service(models.Model):
 
 
 class User(models.Model):
-    user_id = models.CharField(primary_key=True, max_length=20, db_column='GUID')
-    name = models.CharField(max_length=30, db_column='NAME', null=False)
-    surname = models.CharField(max_length=30, null=False)
-    mail = models.EmailField(db_column='MAIL', null=False)
-    score = models.FloatField(db_column='USER_SCORE', default=0)
+    user_id = models.CharField(primary_key=True,
+                               max_length=20,
+                               db_column='GUID')
+    name = models.CharField(max_length=30,
+                            db_column='NAME',
+                            null=False)
+    surname = models.CharField(max_length=30,
+                               null=False)
+    mail = models.EmailField(db_column='MAIL',
+                             null=False)
+    score = models.FloatField(db_column='USER_SCORE',
+                              default=0)
 
     class Meta:
         db_table = "USER"
@@ -81,16 +88,17 @@ class Advert(models.Model):
 
 class ServiceOffer(models.Model):
     service_offer_id = models.CharField(primary_key=True,
+                                        null=False,
                                         max_length=20,
                                         db_column='SERVICEOFFID')
     purchaser = models.ForeignKey(Customer,
                                   db_column='PURCHASERID',
                                   null=False,
                                   on_delete=models.CASCADE)
-    adver_id = models.ForeignKey(Advert,
-                                 db_column='ADVERID',
-                                 null=False,
-                                 on_delete=models.CASCADE)
+    adv_id = models.ForeignKey(Advert,
+                               db_column='ADVERID',
+                               null=False,
+                               on_delete=models.CASCADE)
     customer_conditions = models.CharField(max_length=1000,
                                            db_column='CUSTOMERCOND',
                                            null=False)
@@ -101,6 +109,10 @@ class ServiceOffer(models.Model):
                               null=False,
                               db_column='STATUS',
                               default="Undetermined")
+    customer_performance = models.IntegerField(db_column='CUSTOMERSCORE',
+                                               null=True)
+    provider_performance = models.IntegerField(db_column='PROVIDERSCORE',
+                                               null=True)
 
     class Meta:
         db_table = "SERVICEOFFER"
@@ -114,8 +126,10 @@ class Schedule(models.Model):
                                   max_length=20,
                                   on_delete=models.CASCADE,
                                   db_column='EXPERTID')
-    session_date = models.DateField(null=False, db_column='SESSIONDATE')
-    hour = models.IntegerField(db_column='SESSIONHOUR', null=False)
+    session_date = models.DateField(null=False,
+                                    db_column='SESSIONDATE')
+    hour = models.IntegerField(db_column='SESSIONHOUR',
+                               null=False)
     customer_id = models.ForeignKey(Customer,
                                     max_length=20,
                                     db_column='CUSTID',
@@ -140,32 +154,19 @@ class OfferSessions(models.Model):
         db_table = "OFFERSESSION"
 
 
-class ServiceSatisfaction(models.Model):
-    service_satisfaction_id = models.CharField(primary_key=True,
-                                               max_length=20,
-                                               db_column='SERVICESATID')
-    off_id = models.ForeignKey(ServiceOffer,
-                               max_length=20,
-                               db_column='OFFID',
-                               null=False,
-                               on_delete=models.CASCADE)
-    customer_performance = models.IntegerField(db_column='CUSTOMERSCORE',
-                                               null=True)
-    provider_performance = models.IntegerField(db_column='PROVIDERSCORE',
-                                               null=True)
-
-    class Meta:
-        db_table = "SERVICESATISFACTION"
-
-
 class SatisfactionFails(models.Model):
-    satisfaction_id = models.ForeignKey(ServiceSatisfaction,
-                                        primary_key=True,
+    satisfaction_id = models.ForeignKey(ServiceOffer,
                                         max_length=20,
                                         db_column='SATISFACID',
                                         on_delete=models.CASCADE)
 
-    failure = models.CharField(max_length=20, db_column='FAILURE', null=False)
+    failure = models.CharField(max_length=20,
+                               db_column='FAILURE',
+                               null=False)
+
+    class Meta:
+        db_table = "SATISFACTIONFAIL"
+        unique_together = (('satisfaction_id', 'failure'),)
 
 
 class Message(models.Model):
@@ -175,24 +176,16 @@ class Message(models.Model):
     context = models.CharField(max_length=100,
                                db_column='CONTEXT',
                                null=False)
+    mesoffid = models.ForeignKey(ServiceOffer,
+                                 max_length=20,
+                                 db_column='MESOFFID',
+                                 on_delete=models.CASCADE)
     sender = models.ForeignKey(User,
                                db_column='SENDERID',
                                null=False,
                                on_delete=models.CASCADE)
-    sendtime = models.DateTimeField(db_column='SENDTIME', default=timezone.now)
+    sendtime = models.DateTimeField(db_column='SENDTIME',
+                                    default=timezone.now)
 
     class Meta:
         db_table = "MESSAGE"
-
-
-class Chat(models.Model):
-    mess_id = models.ForeignKey(Message,
-                                max_length=20,
-                                db_column='MESSID',
-                                null=False,
-                                on_delete=models.CASCADE)
-    offer_id = models.ForeignKey(ServiceOffer,
-                                 max_length=20,
-                                 db_column='OFID',
-                                 null=False,
-                                 on_delete=models.CASCADE)
