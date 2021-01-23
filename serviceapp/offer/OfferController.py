@@ -8,7 +8,7 @@ class OfferController:
 
     def __init__(self, offid):
         try:
-            self.serviceoffer = ServiceOffer.objects.filter(service_offer_id=offid)
+            self.serviceoffer = ServiceOffer.objects.filter(service_offer_id=offid).get()
         except Exception as e:
             print(e + "\nID ile obje bulunamadı.")
 

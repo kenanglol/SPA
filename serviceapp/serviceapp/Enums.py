@@ -22,8 +22,7 @@ class ServiceStatus(Enum):
 class Services(Enum):
     Message = 1
     ServiceOffer = 2
-    ServiceSatisfaction = 3
-    User = 4
-    Service = 5
-    Advert = 6
-    Session = 7
+    User = 3
+    Service = 4
+    Advert = 5
+    Session = 6

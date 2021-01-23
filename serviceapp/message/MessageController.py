@@ -14,10 +14,10 @@ class MessageController:
         guid = Generator.generate(Services.Message)
         Message(guid, context, id).save()
 
-    def message_getsome(self):
+    def message_getall(self):
         allmessage = Message.objects.all()
         return allmessage
 
-    def message_getall(self, num):
+    def message_getsome(self, num):
         allmessage = Message.objects.order_by('sendtime')[:num].get()
         return allmessage

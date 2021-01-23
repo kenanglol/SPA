@@ -32,6 +32,10 @@ class User(models.Model):
                              null=False)
     score = models.FloatField(db_column='USER_SCORE',
                               default=0)
+    location = models.CharField(max_length=100,
+                                db_column='LOCATION',
+                                null=False,
+                                default="İstanbul")
 
     class Meta:
         db_table = "USER"
@@ -54,9 +58,7 @@ class Provider(models.Model):
                                        max_length=20,
                                        db_column='PROID',
                                        on_delete=models.CASCADE)
-    location = models.CharField(max_length=100,
-                                db_column='LOCATION',
-                                null=False)
+
     experience = models.IntegerField(db_column='EXP')
 
     speciality = models.ForeignKey(Service,
