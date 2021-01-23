@@ -23,11 +23,6 @@ class IDGenerator:
                 last_object = ServiceOffer.objects.all().order_by(
                     'service_offer_id').last()
                 lastid = last_object.service_offer_id
-            elif servis == Services.ServiceSatisfaction:
-                idcode = 'SAT'
-                last_object = ServiceSatisfaction.objects.all().order_by(
-                    'service_satisfaction_id').last()
-                lastid = last_object.service_satisfaction_id
             elif servis == Services.User:
                 idcode = 'USR'
                 last_object = User.objects.all().order_by('user_id').last()
