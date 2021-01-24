@@ -3,10 +3,8 @@ from django.utils import timezone
 
 
 class Service(models.Model):
-    service_id = models.CharField(primary_key=True,
-                                  max_length=20,
-                                  db_column='SERVICEID')
-    service_name = models.CharField(max_length=20,
+    service_name = models.CharField(primary_key=True,
+                                    max_length=20,
                                     db_column='SERVICENAME',
                                     null=False)
     summary = models.CharField(max_length=500, db_column='SERVSUMMARY')
@@ -60,10 +58,10 @@ class Provider(models.Model):
                                        on_delete=models.CASCADE)
 
     experience = models.IntegerField(db_column='EXP')
-
     speciality = models.ForeignKey(Service,
-                                   db_column='SPECIALITYID',
+                                   db_column='SPECIALITY',
                                    null=False,
+                                   default="",
                                    on_delete=models.CASCADE)
 
     class Meta:
@@ -83,6 +81,11 @@ class Advert(models.Model):
                                 max_length=20,
                                 db_column='PROVID',
                                 on_delete=models.CASCADE)
+    advert_service = models.ForeignKey(Service,
+                                       null=False,
+                                       default="",
+                                       db_column='ADVSERVICE',
+                                       on_delete=models.CASCADE)
 
     class Meta:
         db_table = "ADVERT"

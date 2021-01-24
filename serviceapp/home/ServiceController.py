@@ -10,5 +10,5 @@ class ServiceController:
         Service(guid, name, summary, category).save()
 
     @staticmethod
-    def service_get_by_category(self, category):
+    def service_get_by_category(category):
         Service.objects.filter(category=category)

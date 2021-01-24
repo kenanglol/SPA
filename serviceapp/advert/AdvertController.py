@@ -28,6 +28,10 @@ class AdvertController:
         Advert.objects.filter(advert_id=self.advertisement.advert_id).delete()
 
     @staticmethod
-    def get_adverts(custid, minprice=20, maxprice=(max_price + 1)):
+    def get_adverts(custid, subservice, minprice=20, maxprice=(max_price + 1)):
         loc = User.objects.filter(user_id=custid).get().location
-        return Advert.objects.filter(prov_id__provider_id__location=loc, price__gt=minprice, price__lt=maxprice)
+        return Advert.objects.filter(prov_id__provider_id__location=loc, price__gt=minprice, price__lt=maxprice,
+                                     advert_service=subservice)
+
+    def get_advert(self):
+        return self.advertisement
