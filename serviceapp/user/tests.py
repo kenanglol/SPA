@@ -6,8 +6,9 @@ import unittest
 
 class ValidatorsTestCase(unittest.TestCase):
     def test_pro_add(self):
-        pro = ProviderController.provider_add('ahmet', 'can', 'abc@gmail.com', 'Balıkesir', 3, 'SVR2021010000')
-        self.assertIsNotNone(Provider.objects.filter(experience=pro.experience, speciality=pro.speciality))
+        new_pro = User.objects.filter(user_id='USR2021010004').get()
+        if new_pro is not None:
+            self.assertEqual(new_pro.mail, 'abc@gmail.com')
         return True
 
 
