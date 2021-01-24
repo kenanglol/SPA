@@ -26,10 +26,13 @@ jobs:
         pip install flake8 pytest
         pip install django
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Set Django varieble
+      run: |
+        set DJANGO_SETTINGS_MODULE=serviceapp.settings
     - name: Run migrations
       run: |
         python serviceapp/manage.py makemigrations
         python serviceapp/manage.py migrate
     - name: Test with pytest
       run: |
-        python serviceapp/manage.py test
+        python serviceapp/user/tests.py --unittest
