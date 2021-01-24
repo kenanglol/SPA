@@ -9,6 +9,7 @@ class ValidatorsTestCase(unittest.TestCase):
         new_pro = User.objects.filter(user_id='USR2021010004').get()
         if new_pro is not None:
             self.assertEqual(new_pro.mail, 'abc@gmail.com')
+            self.assertTrue(len(new_pro.name) < 31)
         return True
 
 
