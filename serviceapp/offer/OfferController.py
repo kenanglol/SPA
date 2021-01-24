@@ -1,6 +1,7 @@
 from home.models import ServiceOffer, OfferSessions, Schedule
 from serviceapp.Enums import Services, OfferStatus
 from serviceapp.IDGenerator import IDGenerator as Generator
+import datetime
 
 
 class OfferController:
@@ -40,3 +41,14 @@ class OfferController:
     @staticmethod
     def offer_get_by_stat(provid, status):
         ServiceOffer.objects.filter(adv_id__prov_id=provid, status=status)
+
+    def date_passed(self):
+        last_session = Schedule.objects.filter(expert_id=self.serviceoffer.adv_id__prov_id,
+                                               customer_id=self.serviceoffer.purchaser).order_by('session_date',
+                                                                                                 'hour').first()
+        if last_session is not None and last_session.status == OfferStatus.ACCEPTED:
+            if last_session.session_date > datetime.date.today() and last_session.hour < datetime.time.hour:
+                self.offer_status_change(OfferStatus.DONE)
+                return True
+            else:
+                return False
