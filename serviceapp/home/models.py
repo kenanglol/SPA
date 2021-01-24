@@ -104,9 +104,6 @@ class ServiceOffer(models.Model):
     customer_conditions = models.CharField(max_length=1000,
                                            db_column='CUSTOMERCOND',
                                            null=False)
-    satisfaction_id = models.CharField(max_length=20,
-                                       db_column='SATISFACTIONID',
-                                       null=False)
     status = models.CharField(max_length=10,
                               null=False,
                               db_column='STATUS',

@@ -13,9 +13,9 @@ class OfferController:
             print(e + "\nID ile obje bulunamadı.")
 
     @staticmethod
-    def offer_add(cusid, advertid, customerconditions, satis_id):
+    def offer_add(cusid, advertid, customerconditions):
         guid = Generator.generate(Services.ServiceOffer)
-        ServiceOffer(guid, cusid, advertid, customerconditions, satis_id, ServiceStatus.Offered).save()
+        ServiceOffer(guid, cusid, advertid, customerconditions,ServiceStatus.Offered).save()
 
     def offer_get(self):
         return self.serviceoffer
