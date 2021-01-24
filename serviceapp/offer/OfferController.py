@@ -1,5 +1,5 @@
 from home.models import ServiceOffer, OfferSessions, Schedule
-from serviceapp.Enums import Services, ServiceStatus
+from serviceapp.Enums import Services, OfferStatus
 from serviceapp.IDGenerator import IDGenerator as Generator
 
 
@@ -15,7 +15,7 @@ class OfferController:
     @staticmethod
     def offer_add(cusid, advertid, customerconditions):
         guid = Generator.generate(Services.ServiceOffer)
-        ServiceOffer(guid, cusid, advertid, customerconditions,ServiceStatus.Offered).save()
+        ServiceOffer(guid, cusid, advertid, customerconditions, OfferStatus.OFFERED).save()
 
     def offer_get(self):
         return self.serviceoffer
@@ -36,3 +36,7 @@ class OfferController:
     def offer_status_change(self, servstatus):
         self.serviceoffer.status = servstatus
         self.serviceoffer.save()
+
+    @staticmethod
+    def offer_get_by_stat(provid, status):
+        ServiceOffer.objects.filter(adv_id__prov_id=provid, status=status)

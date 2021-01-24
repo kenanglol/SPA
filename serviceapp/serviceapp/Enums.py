@@ -11,12 +11,12 @@ class Category(Enum):
     Wedding = "Wedding"
 
 
-class ServiceStatus(Enum):
-    Offered = 1
-    Accepted = 2
-    Rejected = 3
-    Done = 4
-    Cancelled = 5
+class OfferStatus(Enum):
+    OFFERED = 1
+    ACCEPTED = 2
+    REJECTED = 3
+    DONE = 4
+    CANCELLED = 5
 
 
 class Services(Enum):
