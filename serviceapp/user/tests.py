@@ -1,5 +1,3 @@
-from django.test import TestCase
-from user.UserController import ProviderController
 from home.models import *
 import unittest
 
@@ -26,4 +24,5 @@ class ValidatorsTestCase(unittest.TestCase):
         return True
 
 
-
+if __name__ == '__main__':
+    unittest.main()
