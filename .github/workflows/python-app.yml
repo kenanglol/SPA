@@ -32,4 +32,4 @@ jobs:
         python serviceapp/manage.py migrate
     - name: Test with pytest
       run: |
-        python serviceapp/manage.py test
+        python serviceapp/user/tests.py --unittest
