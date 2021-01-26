@@ -21,13 +21,21 @@ class User(models.Model):
     user_id = models.CharField(primary_key=True,
                                max_length=20,
                                db_column='GUID')
+    hashpass = models.BinaryField(db_column='HASHPASS',
+                                  null=False,
+                                  default=b"")
+    key = models.BinaryField(db_column='KEY',
+                             null=False,
+                             default=b"")
     name = models.CharField(max_length=30,
                             db_column='NAME',
                             null=False)
     surname = models.CharField(max_length=30,
-                               null=False)
+                               null=False,
+                               db_column='SURNAME')
     mail = models.EmailField(db_column='MAIL',
-                             null=False)
+                             null=False,
+                             unique=True)
     score = models.FloatField(db_column='USER_SCORE',
                               default=0)
     location = models.CharField(max_length=100,
