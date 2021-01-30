@@ -1,22 +1,26 @@
-from home.models import Advert, User
+from home.models import Advert, User, Provider
 from serviceapp.Enums import Services
 from serviceapp.IDGenerator import IDGenerator as Generator
 
 
 class AdvertController:
     advertisement = None
-    max_price = Advert.objects.order_by("price").get().price
+    max_price = 0
 
     def __init__(self, advid):
         try:
             self.servicadvertisement = Advert.objects.filter(advert_id=advid).get()
+            if not Advert.objects.all():
+                self.max_price = Advert.objects.order_by("price").first().price
         except Exception as e:
             print(e + "\nID ile obje bulunamadı.")
 
     @staticmethod
     def advert_add(name, price, summary, provider_id):
         guid = Generator.generate(Services.Advert)
-        Advert(guid, name, price, summary, provider_id).save()
+        prov = Provider.objects.filter(provider_id=provider_id).get()
+        spec = prov.speciality
+        Advert(guid, name, price, summary, provider_id, spec).save()
 
     def advert_update(self, title, price, summary):
         self.advertisement.name = title

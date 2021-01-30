@@ -24,20 +24,11 @@ class User(models.Model):
     hashpass = models.BinaryField(db_column='HASHPASS',
                                   null=False,
                                   default=b"")
-    key = models.BinaryField(db_column='KEY',
-                             null=False,
-                             default=b"")
-    name = models.CharField(max_length=30,
-                            db_column='NAME',
-                            null=False)
-    surname = models.CharField(max_length=30,
-                               null=False,
-                               db_column='SURNAME')
-    mail = models.EmailField(db_column='MAIL',
-                             null=False,
-                             unique=True)
-    score = models.FloatField(db_column='USER_SCORE',
-                              default=0)
+    key = models.BinaryField(db_column='KEY', null=False, default=b"")
+    name = models.CharField(max_length=30, db_column='NAME', null=False)
+    surname = models.CharField(max_length=30, null=False, db_column='SURNAME')
+    mail = models.EmailField(db_column='MAIL', null=False, unique=True)
+    score = models.FloatField(db_column='USER_SCORE', default=0)
     location = models.CharField(max_length=100,
                                 db_column='LOCATION',
                                 null=False,
@@ -83,7 +74,7 @@ class Advert(models.Model):
     advert_name = models.CharField(max_length=100,
                                    db_column='ADVERTNAME',
                                    null=False)
-    price = models.IntegerField(db_column='PRICE', null=False)
+    price = models.IntegerField(db_column='PRICE', null=False, default=0)
     summary = models.CharField(max_length=500, db_column='ADVSUMMARY')
     prov_id = models.ForeignKey(Provider,
                                 max_length=20,
@@ -136,10 +127,8 @@ class Schedule(models.Model):
                                   max_length=20,
                                   on_delete=models.CASCADE,
                                   db_column='EXPERTID')
-    session_date = models.DateField(null=False,
-                                    db_column='SESSIONDATE')
-    hour = models.IntegerField(db_column='SESSIONHOUR',
-                               null=False)
+    session_date = models.DateField(null=False, db_column='SESSIONDATE')
+    hour = models.IntegerField(db_column='SESSIONHOUR', null=False)
     customer_id = models.ForeignKey(Customer,
                                     max_length=20,
                                     db_column='CUSTID',
@@ -170,22 +159,18 @@ class SatisfactionFails(models.Model):
                                         db_column='SATISFACID',
                                         on_delete=models.CASCADE)
 
-    failure = models.CharField(max_length=20,
-                               db_column='FAILURE',
-                               null=False)
+    failure = models.CharField(max_length=20, db_column='FAILURE', null=False)
 
     class Meta:
         db_table = "SATISFACTIONFAIL"
-        unique_together = (('satisfaction_id', 'failure'),)
+        unique_together = (('satisfaction_id', 'failure'), )
 
 
 class Message(models.Model):
     message_id = models.CharField(primary_key=True,
                                   max_length=20,
                                   db_column='MESID')
-    context = models.CharField(max_length=100,
-                               db_column='CONTEXT',
-                               null=False)
+    context = models.CharField(max_length=100, db_column='CONTEXT', null=False)
     mesoffid = models.ForeignKey(ServiceOffer,
                                  max_length=20,
                                  db_column='MESOFFID',
@@ -194,8 +179,7 @@ class Message(models.Model):
                                db_column='SENDERID',
                                null=False,
                                on_delete=models.CASCADE)
-    sendtime = models.DateTimeField(db_column='SENDTIME',
-                                    default=timezone.now)
+    sendtime = models.DateTimeField(db_column='SENDTIME')
 
     class Meta:
         db_table = "MESSAGE"
