@@ -181,5 +181,8 @@ class Message(models.Model):
                                on_delete=models.CASCADE)
     sendtime = models.DateTimeField(db_column='SENDTIME')
 
+    def __str__(self):
+        return self.context
+
     class Meta:
         db_table = "MESSAGE"

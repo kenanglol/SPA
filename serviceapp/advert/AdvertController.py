@@ -9,7 +9,8 @@ class AdvertController:
 
     def __init__(self, advid):
         try:
-            self.servicadvertisement = Advert.objects.filter(advert_id=advid).get()
+            self.servicadvertisement = Advert.objects.filter(
+                advert_id=advid).get()
             if not Advert.objects.all():
                 self.max_price = Advert.objects.order_by("price").first().price
         except Exception as e:
@@ -19,8 +20,12 @@ class AdvertController:
     def advert_add(name, price, summary, provider_id):
         guid = Generator.generate(Services.Advert)
         prov = Provider.objects.filter(provider_id=provider_id).get()
-        spec = prov.speciality
-        Advert(guid, name, price, summary, provider_id, spec).save()
+        Advert(advert_id=guid,
+               advert_name=name,
+               price=price,
+               summary=summary,
+               prov_id=prov,
+               advert_service=prov.speciality).save()
 
     def advert_update(self, title, price, summary):
         self.advertisement.name = title
@@ -34,7 +39,9 @@ class AdvertController:
     @staticmethod
     def get_adverts(custid, subservice, minprice=20, maxprice=(max_price + 1)):
         loc = User.objects.filter(user_id=custid).get().location
-        return Advert.objects.filter(prov_id__provider_id__location=loc, price__gt=minprice, price__lt=maxprice,
+        return Advert.objects.filter(prov_id__provider_id__location=loc,
+                                     price__gt=minprice,
+                                     price__lt=maxprice,
                                      advert_service=subservice)
 
     def get_advert(self):
