@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
-
+from home.views import home_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^advert/', include('advert.urls')),
+    url(r'^user/', include('user.urls')),
+    url(r'^$', home_view),
 ]
