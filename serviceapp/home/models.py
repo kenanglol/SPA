@@ -13,6 +13,9 @@ class Service(models.Model):
                                 db_column='CATEGORY',
                                 default="Undefined")
 
+    def __str__(self):
+        return self.service_name
+
     class Meta:
         db_table = "SERVICE"
 
@@ -34,6 +37,9 @@ class User(models.Model):
                                 null=False,
                                 default="İstanbul")
 
+    def __str__(self):
+        return self.user_id + " " + self.name
+
     class Meta:
         db_table = "USER"
 
@@ -44,6 +50,9 @@ class Customer(models.Model):
                                        max_length=20,
                                        db_column='CUSID',
                                        on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.customer_id
 
     class Meta:
         db_table = "CUSTOMER"
@@ -62,6 +71,9 @@ class Provider(models.Model):
                                    null=False,
                                    default="",
                                    on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.provider_id
 
     class Meta:
         db_table = "PROVIDER"
@@ -85,6 +97,9 @@ class Advert(models.Model):
                                        default="",
                                        db_column='ADVSERVICE',
                                        on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.advert_id + " " + self.advert_name
 
     class Meta:
         db_table = "ADVERT"
@@ -115,6 +130,9 @@ class ServiceOffer(models.Model):
     provider_performance = models.IntegerField(db_column='PROVIDERSCORE',
                                                null=True)
 
+    def __str__(self):
+        return self.service_offer_id
+
     class Meta:
         db_table = "SERVICEOFFER"
 
@@ -135,6 +153,9 @@ class Schedule(models.Model):
                                     null=True,
                                     on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.session_id
+
     class Meta:
         db_table = "SCHEDULE"
 
@@ -149,6 +170,9 @@ class OfferSessions(models.Model):
                                    null=False,
                                    on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.offer_id
+
     class Meta:
         db_table = "OFFERSESSION"
 
@@ -160,6 +184,9 @@ class SatisfactionFails(models.Model):
                                         on_delete=models.CASCADE)
 
     failure = models.CharField(max_length=20, db_column='FAILURE', null=False)
+
+    def __str__(self):
+        return self.satisfaction_id
 
     class Meta:
         db_table = "SATISFACTIONFAIL"
@@ -182,7 +209,7 @@ class Message(models.Model):
     sendtime = models.DateTimeField(db_column='SENDTIME')
 
     def __str__(self):
-        return self.context
+        return self.message_id
 
     class Meta:
         db_table = "MESSAGE"
