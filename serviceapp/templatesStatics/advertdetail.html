@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
             F | Advert Detail
          {% endblock %}
@@ -33,7 +33,7 @@
 
                 <div class="blog-author">
                     <div class="media align-items-center">
-                       <img src="{% static '' %}/img/blog/author.png" alt="">
+                       <img src="{% static 'img/blog/author.png' %}" alt="">
                        <div class="media-body">
                           <a href="#">
                              <h1>Harvard Milan</h1>
@@ -126,7 +126,7 @@
                <br>
 
               
-            <button type="submit" class="btn btn-success">See Adverts</button>
+            <button type="submit" class="btn btn-success">Make An Offer</button>
             <aside class="single_sidebar_widget popular_post_widget">
                 <br>
                 <br>

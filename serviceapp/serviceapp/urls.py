@@ -16,10 +16,25 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
-from home.views import home_view
+from home.views import cat_view, home_view, home_view2
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^advert/', include('advert.urls')),
     url(r'^user/', include('user.urls')),
     url(r'^$', home_view),
+    url(r'^main2.html/$', home_view2),
+    url(r'^main.html/$', home_view),
+    url(r'^main2.html/categories.html/$', cat_view),
+    url(r'^main2.html/categories.html/listAdverts.html/$',
+        include('advert.urls')),
+    url(r'^main2.html/categories.html/listAdverts.html/',
+        include('advert.urls')),
+    url(r'^main.html/categories.html/$', cat_view),
+    url(r'^main.html/categories.html/listAdverts.html/$',
+        include('advert.urls')),
+    url(r'^main.html/categories.html/listAdverts.html/',
+        include('advert.urls')),
+    url(r'^categories.html/$', cat_view),
+    url(r'^categories.html/listAdverts.html/$', include('advert.urls')),
+    url(r'^categories.html/listAdverts.html/', include('advert.urls')),
 ]

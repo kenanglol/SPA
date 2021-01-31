@@ -3,7 +3,7 @@ from .UserController import UserController
 from django.http import HttpResponseRedirect
 from .UserForm import UserForm
 from django.views.decorators.csrf import csrf_exempt
-from home.views import home_view
+from home.views import home_view2
 
 
 @csrf_exempt
@@ -23,7 +23,7 @@ def login(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return redirect(home_view)
+            return redirect(home_view2)
     # if a GET (or any other method) we'll create a blank form
     else:
         print('35')
